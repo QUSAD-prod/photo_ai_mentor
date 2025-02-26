@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>23007514443-rvbjptl02nj3kjtq14bi8jhgstd3i40l.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.23007514443-rvbjptl02nj3kjtq14bi8jhgstd3i40l</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>23007514443-2rin1fccdcs6vpeafbp9ohb0ptf42f8t.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCfaYxxFPMRXl6DmLUiSouuVwgehjZaYYU</string>
+	<key>GCM_SENDER_ID</key>
+	<string>23007514443</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.unschooler.mentorai</string>
+	<key>PROJECT_ID</key>
+	<string>my-test-fdf48</string>
+	<key>STORAGE_BUCKET</key>
+	<string>my-test-fdf48.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:23007514443:ios:d13d5da8367acbbe6522ce</string>
+	<key>DATABASE_URL</key>
+	<string>https://my-test-fdf48.firebaseio.com</string>
+</dict>
+</plist>

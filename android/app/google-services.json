@@ -1,0 +1,115 @@
+{
+  "project_info": {
+    "project_number": "23007514443",
+    "firebase_url": "https://my-test-fdf48.firebaseio.com",
+    "project_id": "my-test-fdf48",
+    "storage_bucket": "my-test-fdf48.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:23007514443:android:ff3431787ffc752a6522ce",
+        "android_client_info": {
+          "package_name": "com.unschooler.mentorai"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "23007514443-k3aa802saca4uc2h88vuicshdndr7vk7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.unschooler.mentorai",
+            "certificate_hash": "09143f21c6c0a9fa2e519f8a2d20dcba4162cb5f"
+          }
+        },
+        {
+          "client_id": "23007514443-ossqiis4b6tf0okpppdinr4bufrvkorq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCJNyUABIXyObk7arvflXmDoP5b-eyLYTY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "23007514443-ossqiis4b6tf0okpppdinr4bufrvkorq.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "23007514443-rhc9njo176l02nhfvhjel7grgd23adga.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.unschooler.mentorai"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:23007514443:android:30fc806f906b1efa6522ce",
+        "android_client_info": {
+          "package_name": "unschooler.code"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "23007514443-2rin1fccdcs6vpeafbp9ohb0ptf42f8t.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "unschooler.code",
+            "certificate_hash": "facada7a19d9b873cfd0b59af38498db0095b743"
+          }
+        },
+        {
+          "client_id": "23007514443-83k503nrtrqf7qks6mjbjuc9076lk1tr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "unschooler.code",
+            "certificate_hash": "42b9a370b6f3984faa478d0a4bb329e6251ec89c"
+          }
+        },
+        {
+          "client_id": "23007514443-p6p0i9b0ce6ie4ieg4qb4oo1f37kq46n.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "unschooler.code",
+            "certificate_hash": "7a269432838318d760ac5ce0a2004a7453d0a9a7"
+          }
+        },
+        {
+          "client_id": "23007514443-ossqiis4b6tf0okpppdinr4bufrvkorq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCJNyUABIXyObk7arvflXmDoP5b-eyLYTY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "23007514443-ossqiis4b6tf0okpppdinr4bufrvkorq.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "23007514443-rhc9njo176l02nhfvhjel7grgd23adga.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.unschooler.mentorai"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

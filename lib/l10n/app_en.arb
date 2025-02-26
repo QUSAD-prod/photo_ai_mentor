@@ -1,0 +1,17 @@
+{
+ "photo": "photo",
+ "text": "text",
+ "settings_tooltip": "settings",
+ "settings_appbar_title": "Settings",
+ "back_tooltip": "Settings",
+ "text_hint": "Enter your question here...",
+ "explain_it_button": "OK, explain it →",
+ "the_minimum_number_error": "The minimum number of characters is 10",
+ "unknown_error": "Unknown error",
+ "result_page_title": "Your result",
+ "explain_again_button": "Explain again",
+ "google_login": "Login with Google",
+ "google_login_error": "Unknown error",
+ "loading": "Wait for 5-10 seconds",
+ "your_request": "Your request:"
+}

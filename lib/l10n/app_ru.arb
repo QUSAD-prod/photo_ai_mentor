@@ -1,0 +1,17 @@
+{
+ "photo": "фото",
+ "text": "текст",
+ "settings_tooltip": "настройки",
+ "settings_appbar_title": "Настройки",
+ "back_tooltip": "назад",
+ "text_hint": "Введите свой вопрос...",
+ "explain_it_button": "Да, решить это →",
+ "the_minimum_number_error": "Минимальное кол-во символов 10",
+ "unknown_error": "Неизвестная ошибка",
+ "result_page_title": "Результат",
+ "explain_again_button": "Решить снова",
+ "google_login": "Войти через Google",
+ "google_login_error": "Неизвестная ошибка",
+ "loading": "Подождите 5-10 секунд",
+ "your_request": "Ваш запрос:"
+}
