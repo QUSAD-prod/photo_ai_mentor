@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:unshooler_ai/l10n/app_localizations.dart';
+import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
 import 'package:unshooler_ai/components/constants.dart';
 
 import '../components/api.dart';
 import '../components/ui.dart';
 
 class ResultPage extends StatefulWidget {
-  const ResultPage({super.key});
+  const ResultPage({super.key, this.arguments});
+
+  // Used when the page is opened directly instead of through a named route.
+  final Map? arguments;
 
   @override
   State<ResultPage> createState() => _ResultPageState();
@@ -21,7 +24,8 @@ class _ResultPageState extends State<ResultPage> {
 
   @override
   Widget build(BuildContext context) {
-    final Map result = ModalRoute.of(context)!.settings.arguments as Map;
+    final Map result = widget.arguments ?? ModalRoute.of(context)!.settings.arguments as Map;
+    final AppLocalizations l10n = AppLocalizations.of(context)!;
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     AppUi appUi = AppUi(context: context);
@@ -30,113 +34,94 @@ class _ResultPageState extends State<ResultPage> {
       children: [
         Scaffold(
           appBar: AppBar(
+            surfaceTintColor: Colors.transparent,
             title: Text(
-              AppLocalizations.of(context)!.result_page_title,
+              l10n.result_page_title,
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
             ),
             leading: IconButton(
-              onPressed: () => Navigator.of(context).pop(),
+              onPressed: () => Navigator.of(context).maybePop(),
               icon: const Icon(
                 Icons.close_rounded,
               ),
-              tooltip: AppLocalizations.of(context)!.back_tooltip,
+              tooltip: l10n.back_tooltip,
             ),
           ),
           body: Column(
             children: [
               Expanded(
                 child: SingleChildScrollView(
+                  padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      // Padding(
-                      //   padding: const EdgeInsets.symmetric(
-                      //     horizontal: 16,
-                      //     vertical: 12,
-                      //   ),
-                      //   child: Text(
-                      //     result["question"],
-                      //     style: const TextStyle(
-                      //       color: Colors.white,
-                      //       fontWeight: FontWeight.w400,
-                      //       fontSize: 18,
-                      //       height: 1.5,
-                      //     ),
-                      //   ),
-                      // ),
-                      // Container(
-                      //   margin: const EdgeInsets.symmetric(vertical: 24),
-                      //   width: width,
-                      //   height: 2,
-                      //   color: Colors.white,
-                      // ),
+                      Container(
+                        padding: const EdgeInsets.all(16),
+                        decoration: BoxDecoration(
+                          color: constants.surface,
+                          borderRadius: BorderRadius.circular(20),
+                          border: Border.all(color: constants.border),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            appUi.sectionLabel(l10n.your_request.toUpperCase()),
+                            const SizedBox(height: 8),
+                            Text(
+                              result["question"],
+                              maxLines: 4,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w500,
+                                fontSize: 17,
+                                height: 1.45,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                       Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 16,
-                          vertical: 12,
-                        ),
-                        child: MarkdownBody(
-                          data: newResult == "" ? result["result"] : newResult,
-                          styleSheet:
-                              MarkdownStyleSheet.fromTheme(Theme.of(context))
-                                  .copyWith(
-                            textScaleFactor: 1.3,
-                          ),
-                        ),
+                        padding: const EdgeInsets.only(top: 24, bottom: 4),
+                        child: appUi.sectionLabel(l10n.solution_title, icon: Icons.auto_awesome_rounded),
+                      ),
+                      MarkdownBody(
+                        data: newResult == "" ? result["result"] : newResult,
+                        styleSheet: getStyleSheet(),
                       ),
                     ],
                   ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(16),
+              Container(
+                padding: EdgeInsets.fromLTRB(16, 12, 16, 12 + MediaQuery.of(context).viewPadding.bottom),
+                decoration: BoxDecoration(
+                  color: constants.background,
+                  border: Border(top: BorderSide(color: constants.border)),
+                ),
                 child: Row(
                   children: [
-                    //TODO Explain Again Button
-                    // FloatingActionButton.extended(
-                    //   onPressed: () => explainAgain(appUi, result),
-                    //   backgroundColor: Colors.transparent,
-                    //   icon: Transform.scale(
-                    //     scaleX: -1,
-                    //     child: const Icon(
-                    //       Icons.refresh,
-                    //       size: 28,
-                    //     ),
-                    //   ),
-                    //   label: Text(
-                    //     AppLocalizations.of(context)!.explain_again_button,
-                    //   ),
-                    // ),
-                    // const Spacer(),
-                    FloatingActionButton(
-                      shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(100),
-                        ),
-                      ),
-                      onPressed: () async => await Clipboard.setData(
-                        ClipboardData(
-                          text: result["result"],
-                        ),
-                      ),
-                      backgroundColor: Colors.transparent,
-                      child: const Icon(
-                        Icons.copy_rounded,
-                        size: 28,
-                      ),
+                    appUi.glassButton(
+                      icon: Icons.copy_rounded,
+                      tooltip: l10n.copy_tooltip,
+                      size: 56,
+                      onPressed: () async {
+                        await Clipboard.setData(
+                          ClipboardData(
+                            text: newResult == "" ? result["result"] : newResult,
+                          ),
+                        );
+                        if (!context.mounted) return;
+                        AppUi(context: context).buildSnackBar(message: l10n.copied);
+                      },
                     ),
-                    const Spacer(),
-                    FloatingActionButton(
-                      shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(100),
-                        ),
-                      ),
-                      onPressed: () => Navigator.of(context).pop(),
-                      backgroundColor: constants.accent,
-                      child: const Icon(
-                        Icons.add_rounded,
-                        size: 28,
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: appUi.primaryButton(
+                        text: l10n.new_question,
+                        icon: Icons.add_rounded,
+                        onPressed: () => Navigator.of(context).maybePop(),
                       ),
                     ),
                   ],
@@ -145,8 +130,46 @@ class _ResultPageState extends State<ResultPage> {
             ],
           ),
         ),
-        appUi.getLoading(width, height, isLoad),
+        appUi.getLoading(width, height, isLoad, message: l10n.loading),
       ],
+    );
+  }
+
+  MarkdownStyleSheet getStyleSheet() {
+    const TextStyle body = TextStyle(
+      color: Color(0xE6FFFFFF),
+      fontSize: 16,
+      height: 1.55,
+    );
+    return MarkdownStyleSheet.fromTheme(Theme.of(context)).copyWith(
+      p: body,
+      listBullet: body,
+      strong: const TextStyle(color: Colors.white, fontWeight: FontWeight.w700),
+      h3: TextStyle(
+        color: constants.accentLight,
+        fontSize: 17,
+        fontWeight: FontWeight.w700,
+        height: 1.4,
+      ),
+      h3Padding: const EdgeInsets.only(top: 14),
+      blockSpacing: 10,
+      code: TextStyle(
+        color: const Color(0xFFFFC9A8),
+        backgroundColor: constants.surfaceHigh,
+        fontFamily: 'Courier',
+        fontSize: 15,
+      ),
+      blockquotePadding: const EdgeInsets.all(16),
+      blockquoteDecoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: [
+            constants.accent.withValues(alpha: 0.22),
+            constants.accent.withValues(alpha: 0.08),
+          ],
+        ),
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: constants.accent.withValues(alpha: 0.4)),
+      ),
     );
   }
 
@@ -162,16 +185,19 @@ class _ResultPageState extends State<ResultPage> {
         newResult = result;
       });
     } catch (e) {
+      if (!mounted) return;
       appUi.buildSnackBar(
         message: AppLocalizations.of(context)!.unknown_error,
         errorEnabled: true,
       );
     } finally {
-      setState(
-        () {
-          isLoad = true;
-        },
-      );
+      if (mounted) {
+        setState(
+          () {
+            isLoad = true;
+          },
+        );
+      }
     }
   }
 }

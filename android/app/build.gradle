@@ -50,7 +50,7 @@ android {
 
     defaultConfig {
         applicationId 'com.unschooler.mentorai'
-        minSdkVersion 21
+        minSdkVersion flutter.minSdkVersion
         multiDexEnabled true
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()

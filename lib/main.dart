@@ -7,13 +7,19 @@ import 'package:unshooler_ai/pages/home_page.dart';
 import 'package:unshooler_ai/pages/result_page.dart';
 import 'package:unshooler_ai/pages/route_manager_page.dart';
 import 'components/constants.dart';
+import 'components/demo.dart';
 import 'firebase_options.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:unshooler_ai/l10n/app_localizations.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'pages/settings_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await loadDemoConfig();
+  // Clean screenshots: no clock, battery or signal icons.
+  if (demoScreen != null) {
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
+  }
 
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
@@ -76,11 +82,16 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
+      locale: demoLocale != null ? Locale(demoLocale!) : null,
       debugShowCheckedModeBanner: false,
       title: 'Unshooler AI',
       theme: ThemeData(
         scaffoldBackgroundColor: constants.background,
-        brightness: Brightness.dark,
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: constants.accent,
+          brightness: Brightness.dark,
+          surface: constants.background,
+        ),
         fontFamily: 'Inter',
         useMaterial3: true,
         splashFactory: InkRipple.splashFactory,
@@ -89,6 +100,7 @@ class _MyAppState extends State<MyApp> {
             statusBarColor: constants.background,
           ),
           backgroundColor: constants.background,
+          foregroundColor: Colors.white,
           centerTitle: true,
           elevation: 0,
         ),

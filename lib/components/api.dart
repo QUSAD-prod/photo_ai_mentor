@@ -4,6 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
 import 'constants.dart';
+import 'demo.dart';
 
 class AppApi {
   AppApi({required this.context});
@@ -13,6 +14,11 @@ class AppApi {
   GraphQLClient get getClient => GraphQLProvider.of(context).value;
 
   Future<String> getResult(String text) async {
+    if (kDemoMode) {
+      final String languageCode = Localizations.localeOf(context).languageCode;
+      await Future.delayed(DemoData.latency);
+      return DemoData.answer(languageCode);
+    }
     GraphQLClient client = getClient;
     String result = json.decode((await client.query(
       QueryOptions(
@@ -33,6 +39,7 @@ class AppApi {
   }
 
   Future<int?> getUserId() async {
+    if (kDemoMode) return 1;
     try {
       GraphQLClient client = getClient;
       int id = (await client.query(
@@ -51,6 +58,7 @@ class AppApi {
   }
 
   Future<int> createUser(Map<String, dynamic> variables) async {
+    if (kDemoMode) return 1;
     GraphQLClient client = getClient;
     int id = (await client.mutate(
       MutationOptions(

@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:unshooler_ai/components/ui.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:unshooler_ai/l10n/app_localizations.dart';
 
 class AppFB {
   AppFB({required this.context});
@@ -11,24 +11,27 @@ class AppFB {
 
   Future<void> googleLogin(void Function() func) async {
     try {
-      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-      if (googleUser != null) {
-        final GoogleSignInAuthentication googleAuth =
-            await googleUser.authentication;
-        final OAuthCredential credential = GoogleAuthProvider.credential(
-          accessToken: googleAuth.accessToken,
-          idToken: googleAuth.idToken,
-        );
-        await FirebaseAuth.instance.signInWithCredential(credential).then(
-              (value) => func(),
-            );
-      }
-    } catch (e) {
-      AppUi(context: context).buildSnackBar(
-        message: AppLocalizations.of(context)!.unknown_error,
-        errorEnabled: true,
+      await GoogleSignIn.instance.initialize();
+      final GoogleSignInAccount googleUser = await GoogleSignIn.instance.authenticate();
+      final OAuthCredential credential = GoogleAuthProvider.credential(
+        idToken: googleUser.authentication.idToken,
       );
-      debugPrint(e.toString());
+      await FirebaseAuth.instance.signInWithCredential(credential).then(
+            (value) => func(),
+          );
+    } on GoogleSignInException catch (e) {
+      if (e.code != GoogleSignInExceptionCode.canceled) _showError(e);
+    } catch (e) {
+      _showError(e);
     }
+  }
+
+  void _showError(Object e) {
+    if (!context.mounted) return;
+    AppUi(context: context).buildSnackBar(
+      message: AppLocalizations.of(context)!.unknown_error,
+      errorEnabled: true,
+    );
+    debugPrint(e.toString());
   }
 }
